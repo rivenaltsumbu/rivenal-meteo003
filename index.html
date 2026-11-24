@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#12a99d">
+    <title>JavaScript Quiz</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="javascript.js" defer></script>
+</head>
+<body>
+    <main>
+        <section class="card welcome-card" id="welcome-screen" aria-labelledby="welcome-title">
+            <h1 id="welcome-title">JavaScript Quiz</h1>
+            <p class="intro">
+                Évaluez vos connaissances en JavaScript en répondant aux questions que nous avons
+                spécialement sélectionnées pour vous. C'est fun et c'est gratuit.
+            </p>
+
+            <form id="welcome-form">
+                <div class="form-field">
+                    <label for="name">Nom</label>
+                    <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-note" required>
+                    <p class="login-note" id="name-note" role="note" hidden>N'oubliez pas de renseigner votre nom avant de commencer le Quiz.</p>
+                </div>
+                <div class="form-field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-note" required>
+                    <p class="login-note" id="email-note" role="note" hidden>N'oubliez pas de renseigner votre email avant de commencer le Quiz.</p>
+                </div>
+                <button class="start-button" type="submit">Commencer</button>
+            </form>
+        </section>
+
+        <section class="card quiz-card" id="quiz-screen" aria-labelledby="question-title" hidden>
+            <h1 id="question-title"></h1>
+            <div class="quiz-status">
+                <span id="question-count"></span>
+                <span class="timer" aria-label="Temps restant">
+                    <span id="timer-value">30</span>
+                </span>
+            </div>
+            <div
+                class="progress-track"
+                id="progress-track"
+                role="progressbar"
+                aria-label="Temps restant"
+                aria-valuemin="0"
+                aria-valuemax="30"
+                aria-valuenow="30"
+            >
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+            <div class="answers" id="answers" role="group" aria-label="Choisissez une réponse"></div>
+            <div class="quiz-actions">
+                <button class="quit-button" id="quit-button" type="button">Quitter</button>
+                <button class="next-button" id="next-button" type="button" disabled>Suivant</button>
+            </div>
+        </section>
+
+        <section class="card result-card" id="result-screen" aria-label="Résultat du quiz" hidden>
+            <h1 class="result-name" id="result-name"></h1>
+            <p class="result-email" id="result-email"></p>
+            <svg class="completion-icon success-icon" viewBox="0 0 160 160" role="img" aria-label="Quiz réussi">
+                <circle cx="80" cy="80" r="72" fill="none" stroke="currentColor" stroke-width="10"></circle>
+                <path d="M47 81l22 22 45-49" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <svg class="completion-icon failure-icon" viewBox="0 0 160 160" role="img" aria-label="Quiz échoué">
+                <circle cx="80" cy="80" r="72" fill="none" stroke="currentColor" stroke-width="10"></circle>
+                <path d="M57 57l46 46m0-46l-46 46" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"></path>
+            </svg>
+            <p class="result-score" id="result-score"></p>
+            <button class="home-button" id="home-button" type="button">Accueil</button>
+        </section>
+    </main>
+</body>
+</html>
