@@ -1,77 +1,159 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#12a99d">
-    <title>JavaScript Quiz</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="javascript.js" defer></script>
-</head>
-<body>
-    <main>
-        <section class="card welcome-card" id="welcome-screen" aria-labelledby="welcome-title">
-            <h1 id="welcome-title">JavaScript Quiz</h1>
-            <p class="intro">
-                Évaluez vos connaissances en JavaScript en répondant aux questions que nous avons
-                spécialement sélectionnées pour vous. C'est fun et c'est gratuit.
-            </p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Consultez la météo actuelle et les prévisions de la semaine."
+    />
+    <title>Météo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="decoration decoration-dots" aria-hidden="true"></div>
+    <div class="decoration decoration-corner" aria-hidden="true"></div>
+    <div class="decoration decoration-rings" aria-hidden="true"></div>
+    <div class="decoration decoration-zigzag" aria-hidden="true"></div>
 
-            <form id="welcome-form">
-                <div class="form-field">
-                    <label for="name">Nom</label>
-                    <input id="name" name="name" type="text" autocomplete="name" aria-describedby="name-note" required>
-                    <p class="login-note" id="name-note" role="note" hidden>N'oubliez pas de renseigner votre nom avant de commencer le Quiz.</p>
-                </div>
-                <div class="form-field">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" autocomplete="email" aria-describedby="email-note" required>
-                    <p class="login-note" id="email-note" role="note" hidden>N'oubliez pas de renseigner votre email avant de commencer le Quiz.</p>
-                </div>
-                <button class="start-button" type="submit">Commencer</button>
-            </form>
+    <main class="weather-app">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Accueil météo">
+          <img src="assets/images/logo.svg" alt="Météo" />
+        </a>
+        <div class="units-control">
+          <button class="units-button" type="button" aria-expanded="false" aria-controls="units-menu">
+            <img src="assets/images/icon-units.svg" alt="" />
+            <span>Unités</span>
+            <span class="dropdown-caret" aria-hidden="true"></span>
+          </button>
+          <div class="units-menu" id="units-menu" hidden>
+            <fieldset>
+              <legend>Température</legend>
+              <label><input type="radio" name="temperature-unit" value="celsius" checked /> Celsius (°C)</label>
+              <label><input type="radio" name="temperature-unit" value="fahrenheit" /> Fahrenheit (°F)</label>
+            </fieldset>
+            <fieldset>
+              <legend>Vitesse du vent</legend>
+              <label><input type="radio" name="wind-unit" value="kmh" checked /> km/h</label>
+              <label><input type="radio" name="wind-unit" value="mph" /> mph</label>
+            </fieldset>
+            <fieldset>
+              <legend>Précipitations</legend>
+              <label><input type="radio" name="precipitation-unit" value="mm" checked /> Millimètres (mm)</label>
+              <label><input type="radio" name="precipitation-unit" value="inches" /> Pouces (in)</label>
+            </fieldset>
+          </div>
+        </div>
+      </header>
+
+      <h1>Quel temps fait-il aujourd’hui&nbsp;?</h1>
+
+      <form class="search-form" role="search">
+        <label class="search-field">
+          <img src="assets/images/icon-search.svg" alt="" />
+          <input type="search" placeholder="Rechercher une ville..." aria-label="Rechercher une ville" required />
+        </label>
+        <button type="submit">Rechercher</button>
+        <button class="location-button" type="button" aria-label="Afficher la météo de ma position">
+          <svg viewBox="0 0 16 16" aria-hidden="true">
+            <path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2" />
+            <circle cx="8" cy="8" r="4.5" />
+            <circle cx="8" cy="8" r="1.25" />
+          </svg>
+          <span>Ma position</span>
+        </button>
+      </form>
+      <p class="search-status" role="status" aria-live="polite" hidden>
+        <img class="status-icon" alt="" hidden />
+        <span class="status-message"></span>
+      </p>
+      <div class="forecast-layout">
+        <section class="current-column" aria-label="Météo actuelle et prévisions journalières">
+          <article class="current-weather">
+            <div class="location">
+              <h2 class="location-name">Détection de votre position…</h2>
+              <p class="current-date">Chargement de la météo…</p>
+            </div>
+            <div class="current-condition">
+              <span class="current-icon-wrap">
+                <img class="current-icon" src="assets/images/icon-sunny.webp" alt="Ensoleillé" />
+                <img class="current-moon-icon" src="assets/images/icon-moon.svg" alt="" aria-hidden="true" hidden />
+              </span>
+              <div class="current-reading">
+                <p class="temperature current-temperature">—</p>
+                <p class="weather-advice" hidden></p>
+                <p class="current-description">Chargement…</p>
+              </div>
+            </div>
+          </article>
+
+          <section class="weather-details" aria-label="Weather details">
+            <article class="detail-card">
+              <h3>
+                <svg class="detail-icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M6 9.5V3a2 2 0 1 1 4 0v6.5a3.5 3.5 0 1 1-4 0Z" />
+                  <path d="M8 5v6" />
+                </svg>
+                Ressenti
+              </h3>
+              <p class="temperature feels-like">—</p>
+            </article>
+            <article class="detail-card">
+              <h3>
+                <svg class="detail-icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M8 1.5S3.5 7 3.5 10.1a4.5 4.5 0 0 0 9 0C12.5 7 8 1.5 8 1.5Z" />
+                  <path d="M6 10.5a2 2 0 0 0 2 2" />
+                </svg>
+                Humidité
+              </h3>
+              <p><span class="humidity-value">—</span><span>%</span></p>
+            </article>
+            <article class="detail-card">
+              <h3>
+                <svg class="detail-icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M2 5h8a2 2 0 1 0-2-2" />
+                  <path d="M1 8h12a2 2 0 1 1-2 2" />
+                  <path d="M3 11h5a1.5 1.5 0 1 1-1.5 1.5" />
+                </svg>
+                Vent
+              </h3>
+              <p><span class="wind-value">—</span> <span class="wind-unit">km/h</span></p>
+            </article>
+            <article class="detail-card">
+              <h3>
+                <svg class="detail-icon" viewBox="0 0 16 16" aria-hidden="true">
+                  <path d="M4 9.5a3.5 3.5 0 0 1 6.7-1.3A2.5 2.5 0 1 1 11 13H4a1.75 1.75 0 1 1 0-3.5Z" />
+                  <path d="m6 13.5-.5 1M9 13.5l-.5 1M12 13.5l-.5 1" />
+                </svg>
+                Précipitations
+              </h3>
+              <p><span class="precipitation-value">—</span> <span class="precipitation-unit">mm</span></p>
+            </article>
+          </section>
+
+          <section class="daily-forecast" aria-labelledby="daily-title">
+            <h2 id="daily-title">Prévisions sur 7 jours</h2>
+            <div class="daily-list"></div>
+          </section>
         </section>
 
-        <section class="card quiz-card" id="quiz-screen" aria-labelledby="question-title" hidden>
-            <h1 id="question-title"></h1>
-            <div class="quiz-status">
-                <span id="question-count"></span>
-                <span class="timer" aria-label="Temps restant">
-                    <span id="timer-value">30</span>
-                </span>
-            </div>
-            <div
-                class="progress-track"
-                id="progress-track"
-                role="progressbar"
-                aria-label="Temps restant"
-                aria-valuemin="0"
-                aria-valuemax="30"
-                aria-valuenow="30"
-            >
-                <div class="progress-fill" id="progress-fill"></div>
-            </div>
-            <div class="answers" id="answers" role="group" aria-label="Choisissez une réponse"></div>
-            <div class="quiz-actions">
-                <button class="quit-button" id="quit-button" type="button">Quitter</button>
-                <button class="next-button" id="next-button" type="button" disabled>Suivant</button>
-            </div>
+        <section class="hourly-forecast" aria-labelledby="hourly-title">
+          <div class="hourly-heading">
+            <h2 id="hourly-title">Prévisions horaires</h2>
+            <label class="day-select-wrap">
+              <span class="visually-hidden">Choisir le jour des prévisions</span>
+              <select class="day-select"></select>
+            </label>
+          </div>
+          <div class="hourly-list"></div>
         </section>
-
-        <section class="card result-card" id="result-screen" aria-label="Résultat du quiz" hidden>
-            <h1 class="result-name" id="result-name"></h1>
-            <p class="result-email" id="result-email"></p>
-            <svg class="completion-icon success-icon" viewBox="0 0 160 160" role="img" aria-label="Quiz réussi">
-                <circle cx="80" cy="80" r="72" fill="none" stroke="currentColor" stroke-width="10"></circle>
-                <path d="M47 81l22 22 45-49" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <svg class="completion-icon failure-icon" viewBox="0 0 160 160" role="img" aria-label="Quiz échoué">
-                <circle cx="80" cy="80" r="72" fill="none" stroke="currentColor" stroke-width="10"></circle>
-                <path d="M57 57l46 46m0-46l-46 46" fill="none" stroke="currentColor" stroke-width="10" stroke-linecap="round"></path>
-            </svg>
-            <p class="result-score" id="result-score"></p>
-            <button class="home-button" id="home-button" type="button">Accueil</button>
-        </section>
+      </div>
     </main>
-</body>
+    <footer class="data-attribution">
+      Données météo : <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a>
+      · Données de localisation © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>
+    </footer>
+    <script src="schript.js" defer></script>
+  </body>
 </html>
